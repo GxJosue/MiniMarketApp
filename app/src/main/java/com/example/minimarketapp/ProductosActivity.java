@@ -42,7 +42,6 @@ public class ProductosActivity extends AppCompatActivity {
         cargarProductos();
 
         btnAgregarProducto.setOnClickListener(v -> {
-            // Aquí lanzarás la actividad para agregar producto (más adelante)
             Intent intent = new Intent(ProductosActivity.this, AgregarProductoActivity.class);
             startActivityForResult(intent, REQUEST_CODE_AGREGAR);
         });

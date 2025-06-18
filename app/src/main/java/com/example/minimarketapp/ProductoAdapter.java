@@ -34,8 +34,8 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
         Producto producto = listaProductos.get(position);
         holder.tvNombre.setText(producto.getNombre());
         holder.tvPrecio.setText(String.format("$ %.2f", producto.getPrecio()));
-        // Para imagen, por ahora usamos la de ejemplo en item_producto.xml
-        // Luego puedes cargar imagen con Glide o Picasso si quieres
+        // Para imagen, por ahora usamos la de ejemplo
+
     }
 
     @Override
