@@ -3,13 +3,14 @@ package com.example.minimarketapp;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+import android.graphics.Color;
 
 import java.util.ArrayList;
 
@@ -21,22 +22,33 @@ public class ProductosActivity extends AppCompatActivity {
     private BDHelper dbHelper;
     private Button btnAgregarProducto;
 
-    private static final int REQUEST_CODE_AGREGAR = 1; // Para recibir resultado
+    private static final int REQUEST_CODE_AGREGAR = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_productos);
 
+        Toolbar toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // Muestra botón atrás
+            getSupportActionBar().setTitle("Productos");
+        }
+        toolbar.setTitleTextColor(Color.WHITE);
+        if (toolbar.getNavigationIcon() != null) {
+            toolbar.getNavigationIcon().setTint(Color.WHITE);  // Flecha blanca
+        }
+
         rvProductos = findViewById(R.id.rvProductos);
         btnAgregarProducto = findViewById(R.id.btnAgregarProducto);
 
         dbHelper = new BDHelper(this);
-        dbHelper.insertarProductosPrueba();
+        dbHelper.insertarProductosPrueba(); // Solo si aún no hay datos
         listaProductos = new ArrayList<>();
 
         rvProductos.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ProductoAdapter(listaProductos, this);
+        adapter = new ProductoAdapter(listaProductos, this, dbHelper, this::cargarProductos);
         rvProductos.setAdapter(adapter);
 
         cargarProductos();
@@ -67,10 +79,14 @@ public class ProductosActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE_AGREGAR && resultCode == RESULT_OK) {
-            cargarProductos(); // recarga la lista cuando vuelvas de agregar producto
+        if (requestCode == REQUEST_CODE_AGREGAR && resultCode == RESULT_OK) {
+            cargarProductos();
         }
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish(); // cierra esta actividad y vuelve a la anterior
+        return true;
+    }
 }
-
-
