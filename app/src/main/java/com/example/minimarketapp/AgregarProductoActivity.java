@@ -1,5 +1,6 @@
 package com.example.minimarketapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -7,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;  // Importa Toolbar
 
 public class AgregarProductoActivity extends AppCompatActivity {
 
@@ -18,6 +20,18 @@ public class AgregarProductoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_producto);
+
+        // Configurar Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbarAgregar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Agregar Productos");
+        }
+        toolbar.setTitleTextColor(Color.WHITE);
+        if (toolbar.getNavigationIcon() != null) {
+            toolbar.getNavigationIcon().setTint(Color.WHITE);
+        }
 
         etNombre = findViewById(R.id.etNombre);
         etPrecio = findViewById(R.id.etPrecio);
@@ -61,5 +75,12 @@ public class AgregarProductoActivity extends AppCompatActivity {
                 Toast.makeText(this, "Error al agregar producto", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    // Manejar acción del botón "atrás" de la Toolbar
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish(); // Cierra esta actividad y vuelve a la anterior
+        return true;
     }
 }
