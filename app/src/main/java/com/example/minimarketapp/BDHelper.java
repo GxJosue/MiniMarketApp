@@ -8,7 +8,7 @@ import android.database.Cursor;
 
 public class BDHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "ventas.db";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
 
     public BDHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -21,12 +21,21 @@ public class BDHelper extends SQLiteOpenHelper {
 
         // Crear tabla productos
         db.execSQL("CREATE TABLE productos(id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, precio REAL, imagen TEXT)");
+
+        db.execSQL("CREATE TABLE pedidos(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "cliente TEXT, " +
+                "producto TEXT, " +
+                "estado TEXT, " +
+                "fecha INTEGER)");
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS usuarios");
         db.execSQL("DROP TABLE IF EXISTS productos");
+        db.execSQL("DROP TABLE IF EXISTS pedidos");
         onCreate(db);
     }
 
@@ -87,6 +96,36 @@ public class BDHelper extends SQLiteOpenHelper {
             agregarProducto("Producto 2", 20.49, "");
             agregarProducto("Producto 3", 5.75, "");
         }
+    }
+
+    public boolean agregarPedido(String cliente, String producto, String estado, long fecha) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("cliente", cliente);
+        cv.put("producto", producto);
+        cv.put("estado", estado);
+        cv.put("fecha", fecha);
+        long result = db.insert("pedidos", null, cv);
+        return result != -1;
+    }
+
+    public Cursor obtenerPedidos() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM pedidos", null);
+    }
+
+    public boolean actualizarPedidoEstado(int id, String nuevoEstado) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("estado", nuevoEstado);
+        int filas = db.update("pedidos", cv, "id = ?", new String[]{String.valueOf(id)});
+        return filas > 0;
+    }
+
+    public boolean eliminarPedido(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int filas = db.delete("pedidos", "id = ?", new String[]{String.valueOf(id)});
+        return filas > 0;
     }
 
 }
