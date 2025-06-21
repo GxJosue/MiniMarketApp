@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         btnPedidos.setOnClickListener(v -> {
-            // Aquí iría la pantalla de pedidos (a crear luego)
-            //startActivity(new Intent(this, PedidosActivity.class));
+            startActivity(new Intent(this, PedidosActivity.class));
         });
+
 
         btnPerfil.setOnClickListener(v -> {
             // Aquí iría la pantalla de perfil (a crear luego)

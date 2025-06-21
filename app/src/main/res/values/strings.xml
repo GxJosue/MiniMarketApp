@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MiniMarketApp</string>
+    <string-array name="estados_pedidos">
+        <item>Pendiente</item>
+        <item>En proceso</item>
+        <item>Entregado</item>
+        <item>Cancelado</item>
+    </string-array>
 </resources>
