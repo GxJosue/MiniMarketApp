@@ -25,9 +25,11 @@ public class BDHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE pedidos(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "cliente TEXT, " +
-                "producto TEXT, " +
+                "direccion TEXT, " +
+                "productos TEXT, " +
                 "estado TEXT, " +
                 "fecha INTEGER)");
+
 
     }
 
@@ -98,16 +100,18 @@ public class BDHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean agregarPedido(String cliente, String producto, String estado, long fecha) {
+    public boolean agregarPedido(String cliente, String direccion, String productos, String estado, long fecha) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("cliente", cliente);
-        cv.put("producto", producto);
+        cv.put("direccion", direccion);
+        cv.put("productos", productos);
         cv.put("estado", estado);
         cv.put("fecha", fecha);
         long result = db.insert("pedidos", null, cv);
         return result != -1;
     }
+
 
     public Cursor obtenerPedidos() {
         SQLiteDatabase db = this.getReadableDatabase();

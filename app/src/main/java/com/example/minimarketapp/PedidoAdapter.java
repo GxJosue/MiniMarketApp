@@ -35,8 +35,10 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
     public void onBindViewHolder(@NonNull PedidoViewHolder holder, int position) {
         Pedido pedido = lista.get(position);
         holder.tvCliente.setText("Cliente: " + pedido.cliente);
-        holder.tvProducto.setText("Producto: " + pedido.producto);
+        holder.tvProducto.setText("Productos: " + pedido.productos);
         holder.tvEstado.setText("Estado: " + pedido.estado);
+        holder.tvDireccion.setText("Dirección: " + pedido.direccion);
+
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
         String fechaFormato = sdf.format(new Date(pedido.fecha));
@@ -49,11 +51,12 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoAdapter.PedidoView
     }
 
     static class PedidoViewHolder extends RecyclerView.ViewHolder {
-        TextView tvCliente, tvProducto, tvEstado, tvFecha;
+        TextView tvCliente, tvDireccion, tvProducto, tvEstado, tvFecha;
 
         public PedidoViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCliente = itemView.findViewById(R.id.tvCliente);
+            tvDireccion = itemView.findViewById(R.id.tvDireccion);
             tvProducto = itemView.findViewById(R.id.tvProducto);
             tvEstado = itemView.findViewById(R.id.tvEstado);
             tvFecha = itemView.findViewById(R.id.tvFecha);
