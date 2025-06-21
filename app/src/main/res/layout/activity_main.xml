@@ -2,49 +2,63 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="24dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvSaludo"
-        android:text="Bienvenido!"
-        android:textSize="24sp"
-        android:layout_marginBottom="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <!-- Imagen debajo del texto -->
-    <ImageView
-        android:id="@+id/imgBienvenida"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="40dp"
-        android:src="@drawable/welcome"
-        android:contentDescription="Imagen de bienvenida" />
-
-    <Button
-        android:id="@+id/btnProductos"
-        android:text="Productos"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/primary_blue"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary_blue"
+        android:title="Min Market App"
+        android:titleTextColor="@android:color/white" />
 
-    <Button
-        android:id="@+id/btnPedidos"
-        android:text="Pedidos"
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="24dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/primary_blue"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btnPerfil"
-        android:text="Perfil"
-        android:layout_width="match_parent"
-        android:backgroundTint="@color/primary_blue"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvSaludo"
+            android:text="Bienvenido!"
+            android:textSize="24sp"
+            android:layout_marginBottom="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/imgBienvenida"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="40dp"
+            android:src="@drawable/welcome"
+            android:contentDescription="Imagen de bienvenida" />
+
+        <Button
+            android:id="@+id/btnProductos"
+            android:text="Productos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primary_blue"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnPedidos"
+            android:text="Pedidos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primary_blue"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnPerfil"
+            android:text="Perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primary_blue" />
+
+    </LinearLayout>
 
 </LinearLayout>

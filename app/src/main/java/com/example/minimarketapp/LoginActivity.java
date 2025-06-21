@@ -9,7 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText usuario, password;
+    EditText txtUsuario, txtPassword;
     Button btnLogin, btnRegistro;
     BDHelper db;
     SessionManager session;
@@ -17,10 +17,22 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        session = new SessionManager(this);
+        String usuarioGuardado = session.obtenerUsuario();
+
+        if (usuarioGuardado != null) {
+            // Ya hay una sesión activa, ir directamente a MainActivity
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            return; // 👈 para evitar seguir ejecutando el resto
+        }
+
         setContentView(R.layout.activity_login);
 
-        usuario = findViewById(R.id.txtUsuario);
-        password = findViewById(R.id.txtPassword);
+        txtUsuario = findViewById(R.id.txtUsuario);
+        txtPassword = findViewById(R.id.txtPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnRegistro = findViewById(R.id.btnIrRegistro);
 
@@ -28,15 +40,14 @@ public class LoginActivity extends AppCompatActivity {
         session = new SessionManager(this);
 
         btnLogin.setOnClickListener(v -> {
-            String user = usuario.getText().toString();
-            String pass = password.getText().toString();
+            String user = txtUsuario.getText().toString();
+            String pass = txtPassword.getText().toString();
 
             if (db.login(user, pass)) {
-                session.guardarUsuario(user);
+                session.guardarUsuario(user); // ✔ guardamos el nombre de usuario
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
-            }
-                else {
+            } else {
                 Toast.makeText(this, "Credenciales inválidas", Toast.LENGTH_SHORT).show();
             }
         });
