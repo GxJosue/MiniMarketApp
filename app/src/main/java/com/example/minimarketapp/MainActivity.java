@@ -1,21 +1,19 @@
 package com.example.minimarketapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
-import androidx.appcompat.widget.Toolbar;
-import android.graphics.Color;
-
-
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
+    SessionManager session;
     TextView tvSaludo;
     Button btnProductos, btnPedidos, btnPerfil;
-    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,29 +31,29 @@ public class MainActivity extends AppCompatActivity {
         btnPerfil = findViewById(R.id.btnPerfil);
 
         session = new SessionManager(this);
-        String usuario = session.obtenerUsuario();
 
-        // Mostrar saludo con el nombre de usuario
-        if (usuario != null) {
-            tvSaludo.setText("Bienvenido, " + usuario + "!");
-        } else {
-            tvSaludo.setText("Bienvenido!");
+        // Cargar fragmento de inicio
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, new InicioFragment())
+                    .commit();
         }
 
         btnProductos.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ProductosActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, ProductosActivity.class));
         });
-
 
         btnPedidos.setOnClickListener(v -> {
             startActivity(new Intent(this, PedidosActivity.class));
         });
 
-
         btnPerfil.setOnClickListener(v -> {
-            // Aquí iría la pantalla de perfil (a crear luego)
-            // startActivity(new Intent(this, PerfilActivity.class));
+            // Aquí puedes reemplazar con el fragmento si lo estás usando
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, new PerfilFragment())
+                    .addToBackStack(null)
+                    .commit();
         });
     }
 }
+

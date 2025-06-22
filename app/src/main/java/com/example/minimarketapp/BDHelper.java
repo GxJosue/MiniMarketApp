@@ -1,6 +1,7 @@
 package com.example.minimarketapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.ContentValues;
@@ -9,15 +10,20 @@ import android.database.Cursor;
 public class BDHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "ventas.db";
     private static final int DB_VERSION = 3;
+<<<<<<< HEAD
+=======
+    private Context context; // Agregamos el contexto para acceder a SharedPreferences
+>>>>>>> 7752156 (creación del perfil usuario con imagen de perfil y opción de cambiar contraseña y botón de cerrar sesión)
 
     public BDHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        this.context = context; // Guardamos el contexto que se pasa al constructor
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Crear tabla usuarios
-        db.execSQL("CREATE TABLE usuarios(id INTEGER PRIMARY KEY AUTOINCREMENT, usuario TEXT, password TEXT)");
+        db.execSQL("CREATE TABLE usuarios(id INTEGER PRIMARY KEY AUTOINCREMENT, usuario TEXT, correo TEXT, password TEXT)");
 
         // Crear tabla productos
         db.execSQL("CREATE TABLE productos(id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, precio REAL, imagen TEXT)");
@@ -42,21 +48,56 @@ public class BDHelper extends SQLiteOpenHelper {
     }
 
     // Métodos para usuarios
-    public boolean registrarUsuario(String usuario, String password) {
+    public long insertarUsuario(String usuario, String correo, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("usuario", usuario);
+        cv.put("correo", correo);
         cv.put("password", password);
-        long result = db.insert("usuarios", null, cv);
-        return result != -1;
+        return db.insert("usuarios", null, cv);
     }
 
+
+    // Verificar si la contraseña es correcta
+    public boolean verificarPassword(String passwordActual) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int userId = getUserId(); // ← obtiene el ID del usuario en sesión
+        Cursor cursor = db.rawQuery("SELECT * FROM usuarios WHERE id = ? AND password = ?", new String[]{String.valueOf(userId), passwordActual});
+        boolean existe = cursor.getCount() > 0;
+        cursor.close();
+        return existe;
+    }
+
+
+    // Actualizar contraseña
+    public boolean actualizarPassword(String nuevaPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("password", nuevaPassword);
+        int result = db.update("usuarios", contentValues, "id = ?", new String[]{String.valueOf(getUserId())});
+        return result > 0;
+    }
+
+    // Método de login
     public boolean login(String usuario, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM usuarios WHERE usuario = ? AND password = ?", new String[]{usuario, password});
         boolean existe = cursor.getCount() > 0;
         cursor.close();
         return existe;
+    }
+
+    // Obtener el correo del usuario
+    public String obtenerCorreo(String usuario) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT correo FROM usuarios WHERE usuario = ?", new String[]{usuario});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            String correo = cursor.getString(0);
+            cursor.close();
+            return correo;
+        }
+        return null; // Si no se encuentra, devuelve null
     }
 
     // CRUD para productos
@@ -112,7 +153,6 @@ public class BDHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-
     public Cursor obtenerPedidos() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM pedidos", null);
@@ -132,4 +172,11 @@ public class BDHelper extends SQLiteOpenHelper {
         return filas > 0;
     }
 
+    // Método para obtener el ID del usuario desde SharedPreferences
+    private int getUserId() {
+        SharedPreferences prefs = context.getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
+        return prefs.getInt("user_id", -1);  // Devuelve -1 si no hay usuario
+    }
 }
+
+
