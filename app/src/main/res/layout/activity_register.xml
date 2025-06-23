@@ -1,30 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/txtUsuarioRegistro"
-        android:hint="Usuario"
-        android:textColor="@color/primary_blue"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarRegistrar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary_blue"
+        android:title="Registrar"
+        android:titleTextColor="@android:color/white" />
 
-    <EditText
-        android:id="@+id/txtPasswordRegistro"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
-        android:textColor="@color/primary_blue"
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/btnRegistrar"
-        android:text="Registrar"
-        android:backgroundTint="@color/primary_blue"
-        android:textColor="@android:color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/txtUsuarioRegistro"
+            android:hint="Usuario"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/primary_blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/txtPasswordRegistro"
+            android:hint="Contraseña"
+            android:layout_marginTop="30dp"
+            android:inputType="textPassword"
+            android:textColor="@color/primary_blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnRegistrar"
+            android:text="Registrar"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="@color/primary_blue"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 </LinearLayout>
