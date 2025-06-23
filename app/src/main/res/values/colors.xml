@@ -1,4 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary_blue">#1c7ecc</color>
+    <color name="primary_blue">#2196F3</color> <!-- Puedes usar cualquier tono de azul que prefieras -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>
+
+

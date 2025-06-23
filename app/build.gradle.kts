@@ -25,6 +25,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -32,13 +33,26 @@ android {
 }
 
 dependencies {
+    // Asegúrate de que la versión de appcompat sea la correcta
+    implementation ("androidx.appcompat:appcompat:1.2.0") // Biblioteca para Toolbar
 
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.activity)
-    implementation(libs.constraintlayout)
-    implementation("com.google.android.material:material:1.11.0")
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    // Asegúrate de que la versión de material sea la correcta
+    implementation ("com.google.android.material:material:1.9.0")
+    // Biblioteca para NavigationView y otros componentes de material design
+
+    // Dependencia para el ciclo de vida de actividades
+    implementation ("androidx.activity:activity:1.2.0") // Asegúrate de que esta sea la versión correcta
+
+    // Biblioteca para diseños con ConstraintLayout
+    implementation ("androidx.constraintlayout:constraintlayout:2.1.0") // Asegúrate de que esta sea la versión correcta
+
+    // Para pruebas unitarias
+    testImplementation ("junit:junit:4.13.2") // Asegúrate de que esta versión sea la correcta
+
+    // Para pruebas de UI con JUnit
+    androidTestImplementation ("androidx.test.ext:junit:1.1.2") // Asegúrate de que esta sea la versión correcta
+
+    // Para pruebas de UI con Espresso
+    androidTestImplementation ("androidx.espresso:espresso-core:3.3.0") // Asegúrate de que esta sea la versión correcta
 }
+

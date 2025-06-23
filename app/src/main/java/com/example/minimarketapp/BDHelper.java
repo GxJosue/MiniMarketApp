@@ -10,14 +10,12 @@ import android.database.Cursor;
 public class BDHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "ventas.db";
     private static final int DB_VERSION = 3;
-<<<<<<< HEAD
-=======
-    private Context context; // Agregamos el contexto para acceder a SharedPreferences
->>>>>>> 7752156 (creación del perfil usuario con imagen de perfil y opción de cambiar contraseña y botón de cerrar sesión)
+
+    private Context context; // Para acceder a SharedPreferences
 
     public BDHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
-        this.context = context; // Guardamos el contexto que se pasa al constructor
+        this.context = context;
     }
 
     @Override
@@ -28,6 +26,7 @@ public class BDHelper extends SQLiteOpenHelper {
         // Crear tabla productos
         db.execSQL("CREATE TABLE productos(id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, precio REAL, imagen TEXT)");
 
+        // Crear tabla pedidos
         db.execSQL("CREATE TABLE pedidos(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "cliente TEXT, " +
@@ -35,8 +34,6 @@ public class BDHelper extends SQLiteOpenHelper {
                 "productos TEXT, " +
                 "estado TEXT, " +
                 "fecha INTEGER)");
-
-
     }
 
     @Override
@@ -47,7 +44,7 @@ public class BDHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Métodos para usuarios
+    // Insertar usuario
     public long insertarUsuario(String usuario, String correo, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -57,17 +54,15 @@ public class BDHelper extends SQLiteOpenHelper {
         return db.insert("usuarios", null, cv);
     }
 
-
-    // Verificar si la contraseña es correcta
+    // Verificar contraseña
     public boolean verificarPassword(String passwordActual) {
         SQLiteDatabase db = this.getReadableDatabase();
-        int userId = getUserId(); // ← obtiene el ID del usuario en sesión
+        int userId = getUserId();
         Cursor cursor = db.rawQuery("SELECT * FROM usuarios WHERE id = ? AND password = ?", new String[]{String.valueOf(userId), passwordActual});
         boolean existe = cursor.getCount() > 0;
         cursor.close();
         return existe;
     }
-
 
     // Actualizar contraseña
     public boolean actualizarPassword(String nuevaPassword) {
@@ -78,7 +73,7 @@ public class BDHelper extends SQLiteOpenHelper {
         return result > 0;
     }
 
-    // Método de login
+    // Login
     public boolean login(String usuario, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM usuarios WHERE usuario = ? AND password = ?", new String[]{usuario, password});
@@ -87,7 +82,7 @@ public class BDHelper extends SQLiteOpenHelper {
         return existe;
     }
 
-    // Obtener el correo del usuario
+    // Obtener correo de usuario
     public String obtenerCorreo(String usuario) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT correo FROM usuarios WHERE usuario = ?", new String[]{usuario});
@@ -97,11 +92,10 @@ public class BDHelper extends SQLiteOpenHelper {
             cursor.close();
             return correo;
         }
-        return null; // Si no se encuentra, devuelve null
+        return null;
     }
 
-    // CRUD para productos
-
+    // CRUD productos
     public boolean agregarProducto(String nombre, double precio, String imagen) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -134,13 +128,14 @@ public class BDHelper extends SQLiteOpenHelper {
     }
 
     public void insertarProductosPrueba() {
-        if(obtenerProductos().getCount() == 0) {
+        if (obtenerProductos().getCount() == 0) {
             agregarProducto("Producto 1", 10.99, "");
             agregarProducto("Producto 2", 20.49, "");
             agregarProducto("Producto 3", 5.75, "");
         }
     }
 
+    // CRUD pedidos
     public boolean agregarPedido(String cliente, String direccion, String productos, String estado, long fecha) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -172,11 +167,10 @@ public class BDHelper extends SQLiteOpenHelper {
         return filas > 0;
     }
 
-    // Método para obtener el ID del usuario desde SharedPreferences
+    // Obtener ID del usuario desde SharedPreferences
     private int getUserId() {
         SharedPreferences prefs = context.getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
-        return prefs.getInt("user_id", -1);  // Devuelve -1 si no hay usuario
+        return prefs.getInt("user_id", -1);  // -1 si no existe
     }
 }
-
 

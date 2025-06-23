@@ -1,59 +1,87 @@
 package com.example.minimarketapp;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
-    SessionManager session;
-    TextView tvSaludo;
-    Button btnProductos, btnPedidos, btnPerfil;
+import com.google.android.material.navigation.NavigationView;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DrawerLayout drawerLayout;
+    private NavigationView navView;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        // Configurar Toolbar
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Mini Market App");
-        toolbar.setTitleTextColor(Color.WHITE);
 
-        tvSaludo = findViewById(R.id.tvSaludo);
-        btnProductos = findViewById(R.id.btnProductos);
-        btnPedidos = findViewById(R.id.btnPedidos);
-        btnPerfil = findViewById(R.id.btnPerfil);
+        // Configurar DrawerLayout y NavigationView
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navView = findViewById(R.id.nav_view);
 
-        session = new SessionManager(this);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close
+        );
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
-        // Cargar fragmento de inicio
+        navView.setNavigationItemSelectedListener(this);
+
+        // Mostrar fragmento por defecto al iniciar
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, new InicioFragment())
                     .commit();
+            navView.setCheckedItem(R.id.nav_productos); // Asegúrate de que esté en tu menú
         }
+    }
 
-        btnProductos.setOnClickListener(v -> {
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.nav_productos) {
             startActivity(new Intent(this, ProductosActivity.class));
-        });
-
-        btnPedidos.setOnClickListener(v -> {
+        } else if (id == R.id.nav_pedidos) {
             startActivity(new Intent(this, PedidosActivity.class));
-        });
-
-        btnPerfil.setOnClickListener(v -> {
-            // Aquí puedes reemplazar con el fragmento si lo estás usando
+        } else if (id == R.id.nav_perfil) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, new PerfilFragment())
                     .addToBackStack(null)
                     .commit();
-        });
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
+
+
 
