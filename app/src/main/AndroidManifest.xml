@@ -18,7 +18,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -26,15 +25,20 @@
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
-        <activity android:name="MainActivity" />
-        <activity android:name="ProductosActivity" />
-        <activity android:name="AgregarProductoActivity" />  <!-- Acá ir AGG las siguientes views creadass -->
-        <activity android:name=".PedidosActivity" />
 
+        <activity
+            android:name=".MainActivity" />
 
+        <activity
+            android:name=".ProductosActivity" />
 
+        <activity
+            android:name=".AgregarProductoActivity" />
 
+        <activity
+            android:name=".PedidosActivity" />
 
     </application>
 
 </manifest>
+

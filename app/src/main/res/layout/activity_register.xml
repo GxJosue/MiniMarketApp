@@ -7,18 +7,30 @@
 
     <EditText
         android:id="@+id/txtUsuarioRegistro"
-        android:hint="Usuario"
-        android:textColor="@color/primary_blue"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:hint="Usuario"
+        android:inputType="textPersonName"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/txtCorreoRegistro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:hint="Correo electrónico"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="16dp" />
 
     <EditText
         android:id="@+id/txtPasswordRegistro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
         android:hint="Contraseña"
         android:inputType="textPassword"
-        android:textColor="@color/primary_blue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_marginBottom="24dp" />
 
     <Button
         android:id="@+id/btnRegistrar"

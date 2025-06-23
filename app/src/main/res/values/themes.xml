@@ -1,9 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.MiniMarketApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
+    <style name="Theme.MiniMarketApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Colores personalizados -->
+        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorPrimaryVariant">@color/primary_blue</item> <!-- O define otro azul si deseas variación -->
+        <item name="colorOnPrimary">@color/white</item> <!-- Color del texto sobre fondo azul -->
 
-    <style name="Theme.MiniMarketApp" parent="Base.Theme.MiniMarketApp" />
+        <!-- Colores secundarios si deseas -->
+        <item name="colorSecondary">@color/primary_blue</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <!-- Fondo general -->
+        <item name="android:colorBackground">@color/white</item>
+    </style>
 </resources>
+
