@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class RegisterActivity extends AppCompatActivity {
     EditText usuario, password;
     Button btnRegistrar;
-    BDHelper db;
+    UsuarioDao usuarioDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.txtPasswordRegistro);
         btnRegistrar = findViewById(R.id.btnRegistrar);
 
-        db = new BDHelper(this);
+        usuarioDao = AppDatabase.getInstance(getApplicationContext()).usuarioDao();
 
         btnRegistrar.setOnClickListener(v -> {
             String user = usuario.getText().toString();
@@ -32,12 +32,23 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            if (db.registrarUsuario(user, pass)) {
-                Toast.makeText(this, "Registrado correctamente", Toast.LENGTH_SHORT).show();
-                finish(); // vuelve a login
-            } else {
-                Toast.makeText(this, "Error al registrar", Toast.LENGTH_SHORT).show();
-            }
+            new Thread(() -> {
+                Usuario existente = usuarioDao.obtenerPorUsuario(user);
+                runOnUiThread(() -> {
+                    if (existente != null) {
+                        Toast.makeText(this, "Usuario ya existe", Toast.LENGTH_SHORT).show();
+                    } else {
+                        new Thread(() -> {
+                            usuarioDao.insertar(new Usuario(user, pass));
+                            runOnUiThread(() -> {
+                                Toast.makeText(this, "Registrado correctamente", Toast.LENGTH_SHORT).show();
+                                finish();
+                            });
+                        }).start();
+                    }
+                });
+            }).start();
         });
     }
 }
+

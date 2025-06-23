@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class LoginActivity extends AppCompatActivity {
     EditText txtUsuario, txtPassword;
     Button btnLogin, btnRegistro;
-    BDHelper db;
     SessionManager session;
+    UsuarioDao usuarioDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +22,9 @@ public class LoginActivity extends AppCompatActivity {
         String usuarioGuardado = session.obtenerUsuario();
 
         if (usuarioGuardado != null) {
-            // Ya hay una sesión activa, ir directamente a MainActivity
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
-            return; // 👈 para evitar seguir ejecutando el resto
+            return;
         }
 
         setContentView(R.layout.activity_login);
@@ -36,20 +34,24 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnRegistro = findViewById(R.id.btnIrRegistro);
 
-        db = new BDHelper(this);
-        session = new SessionManager(this);
+        usuarioDao = AppDatabase.getInstance(getApplicationContext()).usuarioDao();
 
         btnLogin.setOnClickListener(v -> {
             String user = txtUsuario.getText().toString();
             String pass = txtPassword.getText().toString();
 
-            if (db.login(user, pass)) {
-                session.guardarUsuario(user); // ✔ guardamos el nombre de usuario
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
-            } else {
-                Toast.makeText(this, "Credenciales inválidas", Toast.LENGTH_SHORT).show();
-            }
+            new Thread(() -> {
+                Usuario usuario = usuarioDao.login(user, pass);
+                runOnUiThread(() -> {
+                    if (usuario != null) {
+                        session.guardarUsuario(user);
+                        startActivity(new Intent(this, MainActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Credenciales inválidas", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }).start();
         });
 
         btnRegistro.setOnClickListener(v -> {
@@ -57,3 +59,4 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
+
