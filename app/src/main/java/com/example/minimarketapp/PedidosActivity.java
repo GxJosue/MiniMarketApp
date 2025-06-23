@@ -1,6 +1,7 @@
 package com.example.minimarketapp;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.*;
@@ -9,6 +10,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,20 @@ public class PedidosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedidos);
+
+        Toolbar toolbar = findViewById(R.id.toolbarPedidos);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // mostrar flecha atrás
+            getSupportActionBar().setTitle("Pedidos");
+        }
+
+        toolbar.setTitleTextColor(Color.WHITE);
+        if (toolbar.getNavigationIcon() != null) {
+            toolbar.getNavigationIcon().setTint(Color.WHITE);
+        }
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         rvPedidos = findViewById(R.id.rvPedidos);
         btnAgregarPedido = findViewById(R.id.btnAgregarPedido);

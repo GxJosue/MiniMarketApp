@@ -1,19 +1,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarPedidos"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary_blue"
+        android:title="PEDIDOS"
+        android:titleTextColor="@android:color/white"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPedidos"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp" />
 
     <Button
         android:id="@+id/btnAgregarPedido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Agregar Pedido"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/primary_blue" />
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/primary_blue"
+        android:textColor="@android:color/white" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPedidos"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </LinearLayout>
