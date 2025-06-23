@@ -1,15 +1,31 @@
 package com.example.minimarketapp;
 
-public class Pedido {
-    int id;
-    String cliente;
-    String direccion;
-    String productos;
-    String estado;
-    long fecha;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.ColumnInfo;
 
-    public Pedido(int id, String cliente, String direccion, String productos, String estado, long fecha) {
-        this.id = id;
+@Entity(tableName = "pedidos")
+public class Pedido {
+
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+
+    @ColumnInfo(name = "cliente")
+    public String cliente;
+
+    @ColumnInfo(name = "direccion")
+    public String direccion;
+
+    @ColumnInfo(name = "productos")
+    public String productos;
+
+    @ColumnInfo(name = "estado")
+    public String estado;
+
+    @ColumnInfo(name = "fecha")
+    public long fecha;
+
+    public Pedido(String cliente, String direccion, String productos, String estado, long fecha) {
         this.cliente = cliente;
         this.direccion = direccion;
         this.productos = productos;
@@ -17,6 +33,7 @@ public class Pedido {
         this.fecha = fecha;
     }
 
-    public int getId() { return id; }
-
+    public int getId() {
+        return id;
+    }
 }

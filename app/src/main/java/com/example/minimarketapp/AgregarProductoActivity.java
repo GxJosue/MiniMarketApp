@@ -8,20 +8,20 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;  // Importa Toolbar
+import androidx.appcompat.widget.Toolbar;
 
 public class AgregarProductoActivity extends AppCompatActivity {
 
     EditText etNombre, etPrecio, etImagen;
     Button btnGuardar;
-    BDHelper dbHelper;
+
+    private ProductoDao productoDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_producto);
 
-        // Configurar Toolbar
         Toolbar toolbar = findViewById(R.id.toolbarAgregar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -38,7 +38,7 @@ public class AgregarProductoActivity extends AppCompatActivity {
         etImagen = findViewById(R.id.etImagen);
         btnGuardar = findViewById(R.id.btnGuardarProducto);
 
-        dbHelper = new BDHelper(this);
+        productoDao = AppDatabase.getInstance(getApplicationContext()).productoDao();
 
         btnGuardar.setOnClickListener(v -> {
             String nombre = etNombre.getText().toString().trim();
@@ -66,21 +66,22 @@ public class AgregarProductoActivity extends AppCompatActivity {
                 return;
             }
 
-            boolean res = dbHelper.agregarProducto(nombre, precio, imagen);
-            if (res) {
-                Toast.makeText(this, "Producto agregado", Toast.LENGTH_SHORT).show();
-                setResult(RESULT_OK);
-                finish();
-            } else {
-                Toast.makeText(this, "Error al agregar producto", Toast.LENGTH_SHORT).show();
-            }
+            Producto nuevo = new Producto(nombre, precio, imagen);
+
+            new Thread(() -> {
+                productoDao.insertar(nuevo);
+                runOnUiThread(() -> {
+                    Toast.makeText(this, "Producto agregado", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK);
+                    finish();
+                });
+            }).start();
         });
     }
 
-    // Manejar acción del botón "atrás" de la Toolbar
     @Override
     public boolean onSupportNavigateUp() {
-        finish(); // Cierra esta actividad y vuelve a la anterior
+        finish();
         return true;
     }
 }

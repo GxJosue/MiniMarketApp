@@ -18,18 +18,17 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
 
     private ArrayList<Producto> listaProductos;
     private Context context;
-    private BDHelper dbHelper;
+    private ProductoDao productoDao;
     private OnProductoEliminadoListener listener;
 
-    // Interfaz para notificar a la actividad que se eliminó un producto
     public interface OnProductoEliminadoListener {
         void onProductoEliminado();
     }
 
-    public ProductoAdapter(ArrayList<Producto> listaProductos, Context context, BDHelper dbHelper, OnProductoEliminadoListener listener) {
+    public ProductoAdapter(ArrayList<Producto> listaProductos, Context context, ProductoDao productoDao, OnProductoEliminadoListener listener) {
         this.listaProductos = listaProductos;
         this.context = context;
-        this.dbHelper = dbHelper;
+        this.productoDao = productoDao;
         this.listener = listener;
     }
 
@@ -46,16 +45,19 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
         holder.tvNombre.setText(producto.getNombre());
         holder.tvPrecio.setText(String.format("$ %.2f", producto.getPrecio()));
 
-        // Evento al pulsar el botón eliminar
         holder.btnEliminar.setOnClickListener(v -> {
             new AlertDialog.Builder(context)
                     .setTitle("Eliminar producto")
                     .setMessage("¿Estás seguro de que deseas eliminar este producto?")
                     .setPositiveButton("Sí", (dialog, which) -> {
-                        dbHelper.eliminarProducto(producto.getId());
-                        listaProductos.remove(position);
-                        notifyItemRemoved(position);
-                        listener.onProductoEliminado();
+                        new Thread(() -> {
+                            productoDao.eliminarProducto(producto);  // Room se encarga del ID
+                            ((ProductosActivity) context).runOnUiThread(() -> {
+                                listaProductos.remove(position);
+                                notifyItemRemoved(position);
+                                listener.onProductoEliminado();
+                            });
+                        }).start();
                     })
                     .setNegativeButton("Cancelar", null)
                     .show();
@@ -67,7 +69,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
         return listaProductos.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvNombre, tvPrecio;
         ImageView imgProducto;
         ImageButton btnEliminar;
