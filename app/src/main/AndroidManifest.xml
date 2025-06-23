@@ -30,6 +30,7 @@
         <activity android:name="ProductosActivity" />
         <activity android:name="AgregarProductoActivity" />  <!-- Acá ir AGG las siguientes views creadass -->
         <activity android:name=".PedidosActivity" />
+        <activity android:name=".PerfilActivity" />
 
 
 
