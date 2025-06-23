@@ -6,26 +6,21 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Producto.class, Pedido.class, Usuario.class}, version = 1)
+@Database(entities = {Usuario.class, Producto.class, Pedido.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
+    public abstract UsuarioDao usuarioDao();
     public abstract ProductoDao productoDao();
     public abstract PedidoDao pedidoDao();
-    public abstract UsuarioDao usuarioDao();
 
-    private static volatile AppDatabase INSTANCE;
-
-    public static AppDatabase getInstance(Context context) {
+    private static AppDatabase INSTANCE;
+    public static synchronized AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
-            synchronized (AppDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    AppDatabase.class, "minimarket_db")
-                            .fallbackToDestructiveMigration()
-                            .build();
-                }
-            }
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "ventas.db")
+                    .fallbackToDestructiveMigration()
+                    .build();
         }
         return INSTANCE;
     }
 }
+
 

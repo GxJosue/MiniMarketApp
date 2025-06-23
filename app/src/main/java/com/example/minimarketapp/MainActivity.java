@@ -25,11 +25,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Configurar Toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Configurar DrawerLayout y NavigationView
         drawerLayout = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.nav_view);
 
@@ -45,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navView.setNavigationItemSelectedListener(this);
 
-        // Mostrar fragmento por defecto al iniciar
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, new InicioFragment())

@@ -1,27 +1,26 @@
 package com.example.minimarketapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
     EditText txtUsuario, txtPassword;
     Button btnLogin, btnRegistro;
-    SessionManager session;
     UsuarioDao usuarioDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        session = new SessionManager(this);
-        String usuarioGuardado = session.obtenerUsuario();
+        SharedPreferences prefs = getSharedPreferences("MiPreferencia", Context.MODE_PRIVATE);
+        int idUsuario = prefs.getInt("user_id", -1);
 
-        if (usuarioGuardado != null) {
+        if (idUsuario != -1) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
             return;
@@ -41,16 +40,21 @@ public class LoginActivity extends AppCompatActivity {
             String pass = txtPassword.getText().toString();
 
             new Thread(() -> {
-                Usuario usuario = usuarioDao.login(user, pass);
-                runOnUiThread(() -> {
-                    if (usuario != null) {
-                        session.guardarUsuario(user);
+                Usuario u = usuarioDao.login(user, pass);
+                if (u != null) {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putInt("user_id", u.id);
+                    editor.putString("nombre_usuario", u.usuario);
+                    editor.putString("correo_usuario", u.correo);
+                    editor.apply();
+
+                    runOnUiThread(() -> {
                         startActivity(new Intent(this, MainActivity.class));
                         finish();
-                    } else {
-                        Toast.makeText(this, "Credenciales inválidas", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    });
+                } else {
+                    runOnUiThread(() -> Toast.makeText(this, "Credenciales inválidas", Toast.LENGTH_SHORT).show());
+                }
             }).start();
         });
 
@@ -59,4 +63,3 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
-
