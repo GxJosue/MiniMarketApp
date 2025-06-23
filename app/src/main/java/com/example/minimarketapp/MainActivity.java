@@ -54,8 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         btnPerfil.setOnClickListener(v -> {
-            // Aquí iría la pantalla de perfil (a crear luego)
-            // startActivity(new Intent(this, PerfilActivity.class));
+            startActivity(new Intent(this, PerfilActivity.class));
         });
     }
 }

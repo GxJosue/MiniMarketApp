@@ -20,8 +20,10 @@ public class SessionManager {
     public String obtenerUsuario() {
         return prefs.getString("usuario", null);
     }
-
     public void cerrarSesion() {
-        editor.clear().apply();
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.apply();
     }
+
 }
