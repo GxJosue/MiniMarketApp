@@ -1,0 +1,13 @@
+<resources>
+    <!-- Si ya existe Theme.MiniMarketApp, déjalo como está; aquí solo añadimos el launcher -->
+    <style name="AppTheme.Launcher" parent="Theme.MiniMarketApp">
+        <!-- Fondo inicial (windowBackground) que el sistema dibuja inmediatamente -->
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <!-- Atributos para la SplashScreen API (Android 12+) -->
+        <item name="windowSplashScreenBackground">@android:color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <!-- Después del splash, volvemos al theme normal de la app -->
+        <item name="postSplashScreenTheme">@style/Theme.MiniMarketApp</item>
+    </style>
+</resources>

@@ -1,48 +1,72 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/perfil_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary_blue"
-        android:titleTextColor="@android:color/white" />
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/primary_blue"
+        android:background="?attr/colorPrimary" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:padding="24dp"
+    <ImageView
+        android:id="@+id/ivProfile"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="16dp"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/imgperfil"
+        android:contentDescription="Imagen de perfil"
+        android:clipToOutline="true"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/tvUsuarioPerfil"
+        android:layout_below="@id/ivProfile"
+        android:layout_marginTop="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Correo electronico: "
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/etNombre"
+        android:layout_below="@id/tvUsuarioPerfil"
+        android:layout_marginTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:hint="Nombre completo" />
 
-        <!-- Imagen de perfil centrada -->
-        <ImageView
-            android:id="@+id/imgPerfil"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginBottom="24dp"
-            android:src="@drawable/imgperfil"
-            android:contentDescription="Imagen de perfil"
-            android:scaleType="centerCrop" />
+    <TextView
+        android:id="@+id/tvPending"
+        android:layout_below="@id/etNombre"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@android:color/holo_orange_dark"
+        android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/tvUsuarioPerfil"
-            android:text="Usuario: Invitado"
-            android:textSize="24sp"
-            android:layout_marginBottom="40dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btnActualizarNombre"
+        android:layout_below="@id/tvPending"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/primary_blue"
+        android:text="Actualizar nombre" />
 
-        <Button
-            android:id="@+id/btnCerrarSesion"
-            android:text="Cerrar Sesión"
-            android:backgroundTint="@color/primary_blue"
-            android:textColor="#FFFFFF"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/btnCerrarSesion"
+        android:layout_below="@id/btnActualizarNombre"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/primary_blue"
+        android:text="Cerrar sesión" />
 
-</LinearLayout>
+</RelativeLayout>

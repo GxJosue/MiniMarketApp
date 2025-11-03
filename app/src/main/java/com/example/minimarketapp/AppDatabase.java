@@ -6,11 +6,12 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Producto.class, Pedido.class, Usuario.class}, version = 1)
+@Database(entities = {Producto.class, Pedido.class, Usuario.class, PendingUpdate.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract ProductoDao productoDao();
     public abstract PedidoDao pedidoDao();
     public abstract UsuarioDao usuarioDao();
+    public abstract PendingUpdateDao pendingUpdateDao();
 
     private static volatile AppDatabase INSTANCE;
 
@@ -28,4 +29,3 @@ public abstract class AppDatabase extends RoomDatabase {
         return INSTANCE;
     }
 }
-

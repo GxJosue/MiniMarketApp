@@ -1,49 +1,55 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarRegistrar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary_blue"
-        android:title="Registrar"
-        android:titleTextColor="@android:color/white" />
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/primary_blue"
+        android:background="?attr/colorPrimary" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_marginTop="50dp"
+    <EditText
+        android:id="@+id/txtEmailRegistro"
+        android:layout_below="@id/toolbarRegistrar"
+        android:layout_marginTop="24dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:hint="Correo electrónico"
+        android:inputType="textEmailAddress"
+        android:padding="12dp" />
 
-        <EditText
-            android:id="@+id/txtUsuarioRegistro"
-            android:hint="Usuario"
-            android:layout_marginTop="30dp"
-            android:textColor="@color/primary_blue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/txtNombreRegistro"
+        android:layout_below="@id/txtEmailRegistro"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre completo"
+        android:inputType="textPersonName"
+        android:padding="12dp" />
 
-        <EditText
-            android:id="@+id/txtPasswordRegistro"
-            android:hint="Contraseña"
-            android:layout_marginTop="30dp"
-            android:inputType="textPassword"
-            android:textColor="@color/primary_blue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/txtPasswordRegistro"
+        android:layout_below="@id/txtNombreRegistro"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:padding="12dp" />
 
-        <Button
-            android:id="@+id/btnRegistrar"
-            android:text="Registrar"
-            android:layout_marginTop="25dp"
-            android:backgroundTint="@color/primary_blue"
-            android:textColor="@android:color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btnRegistrar"
+        android:layout_below="@id/txtPasswordRegistro"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/primary_blue"
+        android:text="Registrar" />
 
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

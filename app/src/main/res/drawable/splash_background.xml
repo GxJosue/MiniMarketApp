@@ -1,0 +1,11 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fondo (ajusta color si necesitas) -->
+    <item android:drawable="@android:color/white" />
+
+    <!-- Logo centrado: usa tu logo o @mipmap/ic_launcher -->
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/logo" />
+    </item>
+</layer-list>

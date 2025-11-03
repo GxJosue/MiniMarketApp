@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.minimarketapp" />
+                  <option name="mobileSdkAppId" value="1:391039202899:android:b3654835590c153a3ab8a6" />
+                  <option name="projectId" value="minimarketapp-f9f1f" />
+                  <option name="projectNumber" value="391039202899" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

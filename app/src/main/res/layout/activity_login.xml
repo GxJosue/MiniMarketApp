@@ -22,9 +22,21 @@
         android:layout_gravity="center_horizontal"
         android:src="@drawable/logo" />
 
+    <TextView
+        android:id="@+id/tvAppName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MINI MARKET APP"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_below="@id/imgLogoSplash"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:textColor="@android:color/black" />
+
     <EditText
         android:id="@+id/txtUsuario"
-        android:hint="Usuario"
+        android:hint="Correo electronico"
         android:layout_marginBottom="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -36,6 +48,14 @@
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <CheckBox
+        android:id="@+id/cbRemember"
+        android:layout_below="@id/txtPassword"
+        android:layout_marginTop="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recordarme" />
 
     <Button
         android:id="@+id/btnLogin"

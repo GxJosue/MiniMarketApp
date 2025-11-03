@@ -1,3 +1,4 @@
+// name=app/build.gradle url=https://github.com/GxJosue/MiniMarketApp/blob/main/app/build.gradle
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -40,6 +41,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
 
     val room_version = "2.7.2"
     implementation("androidx.room:room-runtime:$room_version")
@@ -47,4 +50,14 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // Firebase (Auth + Firestore)
+    implementation("com.google.firebase:firebase-auth:21.1.0")
+    implementation("com.google.firebase:firebase-firestore:24.7.0")
+    implementation("androidx.work:work-runtime:2.8.1")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
 }
+
+apply(plugin = "com.google.gms.google-services")
